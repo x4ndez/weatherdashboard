@@ -52,7 +52,6 @@ async function getCityData(type, citySearched) {
 
 async function getWeatherData(type, cityLat, cityLon) {
 
-    let noOfDays = 0;
     let getWeatherUrl = `https://api.openweathermap.org/data/2.5/${type}?lat=${cityLat}&lon=${cityLon}&appid=${weatherAPIKey}`;
 
     const weatherData = await fetch(getWeatherUrl)
@@ -66,13 +65,9 @@ async function getWeatherData(type, cityLat, cityLon) {
 
         if (type === "weather") {
 
-            noOfDays = 1;
-
             renderCurrentWeather(weatherData);
 
         } else if (type === "forecast") {
-
-            noOfDays = 5;
 
             console.log(weatherData);
 
@@ -130,6 +125,36 @@ function renderForecastWeather(weatherData) {
     //make div in main
     //for loop make div in div
 
+    let weatherForecast = [];
+    let timeStampIterator = 2;
 
+    weatherForecastContainer = document.createElement("div");
+    s_main.append(weatherForecastContainer);
+
+    for (let i = 0; i < 5; i++) {
+
+        const date = weatherData.list[timeStampIterator].dt_txt;
+        const temp = weatherData.list[timeStampIterator].main.temp;
+        const wind = weatherData.list[timeStampIterator].wind.speed;
+        const humidity = weatherData.list[timeStampIterator].main.humidity;
+
+        weatherForecast[i] = document.createElement("div");
+
+        weatherForecast[i].innerHTML = `
+
+        <h3>${date}</h3>
+
+        <p>Temp: ${temp} F</p>
+        <p>Wind: ${wind} MPH</p>
+        <p>Humidity: ${humidity} %</p>
+
+        `;
+
+        weatherForecastContainer.append(weatherForecast[i]);
+
+        timeStampIterator += 8;
+
+    }
+    console.log(weatherForecast);
 
 }
