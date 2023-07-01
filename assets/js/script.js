@@ -15,7 +15,7 @@ s_citySearchSubmit.addEventListener("click", function () {
     //if successful >> pull data and parse to next function
     //if error >> throw error, correct city?
 
-    getCity(citySearched);
+    getCityData(citySearched, 5);
 
 
 
@@ -27,7 +27,7 @@ s_citySearchSubmit.addEventListener("click", function () {
 
 });
 
-async function getCity(citySearched) {
+async function getCityData(citySearched, noOfDays) {
 
     let getCityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${citySearched}&appid=${weatherAPIKey}`;
 
@@ -40,30 +40,48 @@ async function getCity(citySearched) {
 
     if (cityData) {
 
-        console.log(cityData[0].name);
-
         getWeatherData(
-            cityData[0].lat, cityData[0].lon
+            cityData[0].lat, cityData[0].lon, noOfDays
         );
 
     }
 
 }
 
-async function getWeatherData(cityLat, cityLon) {
+async function getWeatherData(cityLat, cityLon, noOfDays) {
 
-    let getWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${cityLat}&lon=${cityLon}&appid=${weatherAPIKey}`;
+    let getWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${cityLat}&lon=${cityLon}&cnt=6&appid=${weatherAPIKey}`;
 
     const weatherData = await fetch(getWeatherUrl)
         .then(function (response) {
 
             return response.json();
 
-        })
-        .then(function (data) {
-
-            console.log(data);
-
         });
+
+    if (weatherData) {
+
+        const city = weatherData.city.name;
+        const forecast = {};
+
+        for (let i = 0; i < noOfDays; i++) {
+
+            forecast[i] = {
+
+                date: "x",
+                temp: "y",
+                wind: "z",
+                humidity: "a",
+
+            };
+
+        }
+
+        console.log(city);
+        console.log(forecast);
+
+        //city, date, temp, wind, humidity
+
+    }
 
 }
