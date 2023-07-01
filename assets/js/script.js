@@ -17,21 +17,44 @@ s_citySearchSubmit.addEventListener("click", function () {
 
     getCity(citySearched);
 
+
+
     //:api req: get city weather data
     //if successful >> pull weather data and parse to next function
     //>> Add city to nav list and store in local storage
     //>> display city weather details on main
     //if error >> throw error with error code
 
-
-
 });
 
-function getCity(citySearched) {
+async function getCity(citySearched) {
 
     let getCityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${citySearched}&appid=${weatherAPIKey}`;
 
-    fetch(getCityUrl)
+    const cityData = await fetch(getCityUrl)
+        .then(function (response) {
+
+            return response.json();
+
+        });
+
+    if (cityData) {
+
+        console.log(cityData[0].name);
+
+        getWeatherData(
+            cityData[0].lat, cityData[0].lon
+        );
+
+    }
+
+}
+
+async function getWeatherData(cityLat, cityLon) {
+
+    let getWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${cityLat}&lon=${cityLon}&appid=${weatherAPIKey}`;
+
+    const weatherData = await fetch(getWeatherUrl)
         .then(function (response) {
 
             return response.json();
@@ -41,12 +64,6 @@ function getCity(citySearched) {
 
             console.log(data);
 
-        })
-
-}
-
-function getWeatherData() {
-
-
+        });
 
 }
