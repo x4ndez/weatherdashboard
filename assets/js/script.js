@@ -177,12 +177,38 @@ function addToHistory(city) {
     } else {
 
         searchHistoryArray = JSON.parse(searchHistory);
-        searchHistoryArray.push(city);
-        localStorage.setItem("searchHistory", JSON.stringify(searchHistoryArray));
+
+        if (searchExistsInHistory(city, searchHistoryArray)) {
+
+            console.log("search already exists");
+
+        } else {
+
+            searchHistoryArray.push(city);
+            localStorage.setItem("searchHistory", JSON.stringify(searchHistoryArray));
+
+        }
 
     }
 
     getSearchHistory();
+
+}
+
+function searchExistsInHistory(city, searchHistoryArray) {
+
+    for (let i = 0; i < searchHistoryArray.length; i++) {
+
+        if (city === searchHistoryArray[i]) {
+
+            console.log("isTheSame");
+            return true;
+
+        }
+
+    }
+
+    return false;
 
 }
 
@@ -192,25 +218,39 @@ function getSearchHistory() {
     let searchHistoryArray = JSON.parse(searchHistory);
     let searchHistoryList = [];
 
+    //remove previous search history, so it can be updated
     while (s_searchHistory.firstChild) {
 
         s_searchHistory.firstChild.remove();
 
     }
 
-    for (let i = 0; i < searchHistoryArray.length; i++) {
+    //if there's nothing in local storage, do nothing.
+    if (searchHistoryArray === null) {
 
-        searchHistoryList[i] = document.createElement("li");
-        searchHistoryList[i].textContent = searchHistoryArray[i];
+        console.log("Nothing in localStorage");
 
-        s_searchHistory.append(searchHistoryList[i]);
+    } else {
 
-        searchHistoryList[i].addEventListener("click", function () {
+        // if there are items in local storage, render search history to navbar
 
-            renderWeather(searchHistoryArray[i]);
+        for (let i = 0; i < searchHistoryArray.length; i++) {
 
-        });
+            searchHistoryList[i] = document.createElement("li");
+            searchHistoryList[i].textContent = searchHistoryArray[i];
+
+            s_searchHistory.append(searchHistoryList[i]);
+
+            searchHistoryList[i].addEventListener("click", function () {
+
+                renderWeather(searchHistoryArray[i]);
+
+            });
+
+        }
 
     }
+
+
 
 }
