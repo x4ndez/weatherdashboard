@@ -3,6 +3,7 @@
 
 const s_citySearchInput = document.querySelector("#city-search-input");
 const s_citySearchSubmit = document.querySelector("#city-search-submit");
+const s_main = document.querySelector("main");
 
 const weatherAPIKey = "868193796ea8040d9f907e1ebd86b46c";
 
@@ -15,7 +16,8 @@ s_citySearchSubmit.addEventListener("click", function () {
     //if successful >> pull data and parse to next function
     //if error >> throw error, correct city?
 
-    getCityData(citySearched, 5);
+    getCityData("weather", citySearched);
+    getCityData("forecast", citySearched);
 
 
 
@@ -27,7 +29,7 @@ s_citySearchSubmit.addEventListener("click", function () {
 
 });
 
-async function getCityData(citySearched, noOfDays) {
+async function getCityData(type, citySearched) {
 
     let getCityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${citySearched}&appid=${weatherAPIKey}`;
 
@@ -41,16 +43,17 @@ async function getCityData(citySearched, noOfDays) {
     if (cityData) {
 
         getWeatherData(
-            cityData[0].lat, cityData[0].lon, noOfDays
+            type, cityData[0].lat, cityData[0].lon
         );
 
     }
 
 }
 
-async function getWeatherData(cityLat, cityLon, noOfDays) {
+async function getWeatherData(type, cityLat, cityLon) {
 
-    let getWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${cityLat}&lon=${cityLon}&cnt=6&appid=${weatherAPIKey}`;
+    let noOfDays = 0;
+    let getWeatherUrl = `https://api.openweathermap.org/data/2.5/${type}?lat=${cityLat}&lon=${cityLon}&appid=${weatherAPIKey}`;
 
     const weatherData = await fetch(getWeatherUrl)
         .then(function (response) {
@@ -61,27 +64,72 @@ async function getWeatherData(cityLat, cityLon, noOfDays) {
 
     if (weatherData) {
 
-        const city = weatherData.city.name;
-        const forecast = {};
+        if (type === "weather") {
 
-        for (let i = 0; i < noOfDays; i++) {
+            noOfDays = 1;
 
-            forecast[i] = {
+            renderCurrentWeather(weatherData);
 
-                date: "x",
-                temp: "y",
-                wind: "z",
-                humidity: "a",
+        } else if (type === "forecast") {
 
-            };
+            noOfDays = 5;
+
+            console.log(weatherData);
+
+            renderForecastWeather(weatherData);
 
         }
 
-        console.log(city);
-        console.log(forecast);
+        // const forecast = {};
+        // for (let i = 0; i < noOfDays; i++) {
 
-        //city, date, temp, wind, humidity
+        //     forecast[i] = {
+
+        //         date: "x",
+        //         temp: "y",
+        //         wind: "z",
+        //         humidity: "a",
+
+        //     };
+
+        // }
+
+
 
     }
+
+}
+
+function renderCurrentWeather(weatherData) {
+
+    // add: city, date, temp, wind, humidity
+
+    const city = weatherData.name;
+    const date = "current date";
+    const temp = weatherData.main.temp;
+    const wind = weatherData.wind.speed;
+    const humidity = weatherData.main.humidity;
+
+    const currentWeatherEl = document.createElement("div");
+    currentWeatherEl.innerHTML = `
+
+        <h2>${city} (${date})</h2>
+
+        <p>Temp: ${temp} F</p>
+        <p>Wind: ${wind} MPH</p>
+        <p>Humidity: ${humidity} %</p>
+
+        `;
+
+    s_main.append(currentWeatherEl);
+
+}
+
+function renderForecastWeather(weatherData) {
+
+    //make div in main
+    //for loop make div in div
+
+
 
 }
