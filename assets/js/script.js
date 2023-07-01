@@ -69,7 +69,7 @@ async function getCityData(type, citySearched) {
 
 async function getWeatherData(type, cityLat, cityLon) {
 
-    let getWeatherUrl = `https://api.openweathermap.org/data/2.5/${type}?lat=${cityLat}&lon=${cityLon}&appid=${weatherAPIKey}`;
+    let getWeatherUrl = `https://api.openweathermap.org/data/2.5/${type}?lat=${cityLat}&lon=${cityLon}&units=metric&appid=${weatherAPIKey}`;
 
     const weatherData = await fetch(getWeatherUrl)
         .then(function (response) {
@@ -101,7 +101,7 @@ function renderCurrentWeather(weatherData) {
     // add: city, date, temp, wind, humidity
 
     const city = weatherData.name;
-    const date = "current date";
+    const date = dayjs().format("dddd, DD/MM/YYYY");
     const temp = weatherData.main.temp;
     const wind = weatherData.wind.speed;
     const humidity = weatherData.main.humidity;
@@ -113,8 +113,8 @@ function renderCurrentWeather(weatherData) {
         <h2>${city} (${date})</h2>
 
         <p><img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" /></p>
-        <p>Temp: ${temp} F</p>
-        <p>Wind: ${wind} MPH</p>
+        <p>Temp: ${temp} C</p>
+        <p>Wind: ${wind} km/h</p>
         <p>Humidity: ${humidity} %</p>
 
         `;
@@ -139,7 +139,7 @@ function renderForecastWeather(weatherData) {
 
     for (let i = 0; i < 5; i++) {
 
-        const date = weatherData.list[timeStampIterator].dt_txt;
+        const date = dayjs(weatherData.list[timeStampIterator].dt_txt).format("dddd, DD/MM/YYYY");
         const temp = weatherData.list[timeStampIterator].main.temp;
         const wind = weatherData.list[timeStampIterator].wind.speed;
         const humidity = weatherData.list[timeStampIterator].main.humidity;
@@ -153,8 +153,8 @@ function renderForecastWeather(weatherData) {
         <h3>${date}</h3>
 
         <p><img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" /></p>
-        <p>Temp: ${temp} F</p>
-        <p>Wind: ${wind} MPH</p>
+        <p>Temp: ${temp} C</p>
+        <p>Wind: ${wind} km/h</p>
         <p>Humidity: ${humidity} %</p>
 
         `;
