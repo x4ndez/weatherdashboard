@@ -182,7 +182,7 @@ function addToHistory(city) {
 
     }
 
-    console.log(searchHistory);
+    getSearchHistory();
 
 }
 
@@ -191,6 +191,12 @@ function getSearchHistory() {
     const searchHistory = localStorage.getItem("searchHistory");
     let searchHistoryArray = JSON.parse(searchHistory);
     let searchHistoryList = [];
+
+    while (s_searchHistory.firstChild) {
+
+        s_searchHistory.firstChild.remove();
+
+    }
 
     for (let i = 0; i < searchHistoryArray.length; i++) {
 
