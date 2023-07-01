@@ -4,9 +4,11 @@
 const s_citySearchInput = document.querySelector("#city-search-input");
 const s_citySearchSubmit = document.querySelector("#city-search-submit");
 const s_main = document.querySelector("main");
+const s_searchHistory = document.querySelector("#search-history");
 
 const weatherAPIKey = "868193796ea8040d9f907e1ebd86b46c";
 
+getSearchHistory(); //Render search history to nav bar
 
 s_citySearchSubmit.addEventListener("click", function () {
 
@@ -110,6 +112,8 @@ function renderCurrentWeather(weatherData) {
 
     s_main.append(currentWeatherEl);
 
+    addToHistory(weatherData.name); //Log this search to navbar
+
 }
 
 function renderForecastWeather(weatherData) {
@@ -175,4 +179,27 @@ function addToHistory(city) {
 
 }
 
-addToHistory("Melbourne");
+function getSearchHistory() {
+
+    const searchHistory = localStorage.getItem("searchHistory");
+    let searchHistoryArray = JSON.parse(searchHistory);
+    let searchHistoryList = [];
+
+    for (let i = 0; i < searchHistoryArray.length; i++) {
+
+        searchHistoryList[i] = document.createElement("li");
+        searchHistoryList[i].textContent = searchHistoryArray[i];
+
+        s_searchHistory.append(searchHistoryList[i]);
+
+        searchHistoryList[i].addEventListener("click", function () {
+
+            console.log(searchHistoryArray[i]);
+
+        });
+
+    }
+
+    console.log(searchHistoryList);
+
+}
