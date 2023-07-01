@@ -27,15 +27,11 @@ function renderWeather(userInput) {
 
     }
 
-
     //:api req: call a city to get long, lat details
     //if successful >> pull data and parse to next function
     //if error >> throw error, correct city?
 
     getCityData("weather", citySearched);
-    getCityData("forecast", citySearched);
-
-
 
     //:api req: get city weather data
     //if successful >> pull weather data and parse to next function
@@ -43,6 +39,7 @@ function renderWeather(userInput) {
     //>> display city weather details on main
     //if error >> throw error with error code
 
+    getCityData("forecast", citySearched);
 
 }
 
@@ -53,7 +50,17 @@ async function getCityData(type, citySearched) {
     const cityData = await fetch(getCityUrl)
         .then(function (response) {
 
-            return response.json();
+            if (response.ok) {
+
+                console.log("Request successful: " + response.status);
+                return response.json();
+
+            } else {
+
+                alert("Failed Request: " + response.status);
+                console.log("Failed Request: " + response.status);
+
+            }
 
         });
 
@@ -85,8 +92,6 @@ async function getWeatherData(type, cityLat, cityLon) {
             renderCurrentWeather(weatherData);
 
         } else if (type === "forecast") {
-
-            console.log(weatherData);
 
             renderForecastWeather(weatherData);
 
@@ -152,8 +157,6 @@ function renderForecastWeather(weatherData) {
 
     }
 
-    console.log(timeStampIterator);
-
     for (let i = 0; i < timeStampIterator.length; i++) {
 
         const date = dayjs(weatherData.list[timeStampIterator[i]].dt_txt).format("dddd, DD/MM/YYYY");
@@ -189,7 +192,6 @@ function addToHistory(city) {
 
     if (searchHistory === null) {
 
-        console.log("hey");
         searchHistoryArray.push(city);
         localStorage.setItem("searchHistory", JSON.stringify(searchHistoryArray));
 
@@ -199,7 +201,7 @@ function addToHistory(city) {
 
         if (searchExistsInHistory(city, searchHistoryArray)) {
 
-            console.log("search already exists");
+            //do nothing
 
         } else {
 
@@ -220,7 +222,6 @@ function searchExistsInHistory(city, searchHistoryArray) {
 
         if (city === searchHistoryArray[i]) {
 
-            console.log("isTheSame");
             return true;
 
         }
