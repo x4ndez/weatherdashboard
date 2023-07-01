@@ -12,7 +12,13 @@ getSearchHistory(); //Render search history to nav bar
 
 s_citySearchSubmit.addEventListener("click", function () {
 
-    const citySearched = s_citySearchInput.value;
+    renderWeather(s_citySearchInput.value);
+
+});
+
+function renderWeather(userInput) {
+
+    const citySearched = userInput;
 
     //clear main area
     while (s_main.firstChild) {
@@ -37,7 +43,8 @@ s_citySearchSubmit.addEventListener("click", function () {
     //>> display city weather details on main
     //if error >> throw error with error code
 
-});
+
+}
 
 async function getCityData(type, citySearched) {
 
@@ -194,12 +201,10 @@ function getSearchHistory() {
 
         searchHistoryList[i].addEventListener("click", function () {
 
-            console.log(searchHistoryArray[i]);
+            renderWeather(searchHistoryArray[i]);
 
         });
 
     }
-
-    console.log(searchHistoryList);
 
 }
