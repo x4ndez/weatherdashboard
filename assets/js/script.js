@@ -131,19 +131,36 @@ function renderForecastWeather(weatherData) {
     //for loop make div in div
 
     let weatherForecast = [];
-    let timeStampIterator = 2;
+    let timeStampIterator = [];
 
     weatherForecastContainer = document.createElement("div");
     weatherForecastContainer.setAttribute("id", "forecast-container");
     s_main.append(weatherForecastContainer);
 
-    for (let i = 0; i < 5; i++) {
+    //get the indexes of weather data and put them in the array timeStampIterator...
+    //if they are the day after current date AND the hour is 12:00
+    for (let i = 0; i < weatherData.list.length; i++) {
 
-        const date = dayjs(weatherData.list[timeStampIterator].dt_txt).format("dddd, DD/MM/YYYY");
-        const temp = weatherData.list[timeStampIterator].main.temp;
-        const wind = weatherData.list[timeStampIterator].wind.speed;
-        const humidity = weatherData.list[timeStampIterator].main.humidity;
-        const iconCode = weatherData.list[timeStampIterator].weather[0].icon;
+        if (
+            dayjs().date() < dayjs(weatherData.list[i].dt_txt).date() &&
+            dayjs(weatherData.list[i].dt_txt).isSame(dayjs(weatherData.list[i].dt_txt).hour(12))
+        ) {
+
+            timeStampIterator.push(i);
+
+        }
+
+    }
+
+    console.log(timeStampIterator);
+
+    for (let i = 0; i < timeStampIterator.length; i++) {
+
+        const date = dayjs(weatherData.list[timeStampIterator[i]].dt_txt).format("dddd, DD/MM/YYYY");
+        const temp = weatherData.list[timeStampIterator[i]].main.temp;
+        const wind = weatherData.list[timeStampIterator[i]].wind.speed;
+        const humidity = weatherData.list[timeStampIterator[i]].main.humidity;
+        const iconCode = weatherData.list[timeStampIterator[i]].weather[0].icon;
 
         weatherForecast[i] = document.createElement("div");
         weatherForecast[i].setAttribute("class", "forecast-item");
@@ -160,8 +177,6 @@ function renderForecastWeather(weatherData) {
         `;
 
         weatherForecastContainer.append(weatherForecast[i]);
-
-        timeStampIterator += 8;
 
     }
 
