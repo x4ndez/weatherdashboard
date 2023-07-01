@@ -75,22 +75,6 @@ async function getWeatherData(type, cityLat, cityLon) {
 
         }
 
-        // const forecast = {};
-        // for (let i = 0; i < noOfDays; i++) {
-
-        //     forecast[i] = {
-
-        //         date: "x",
-        //         temp: "y",
-        //         wind: "z",
-        //         humidity: "a",
-
-        //     };
-
-        // }
-
-
-
     }
 
 }
