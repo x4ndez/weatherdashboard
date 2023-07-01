@@ -12,6 +12,14 @@ s_citySearchSubmit.addEventListener("click", function () {
 
     const citySearched = s_citySearchInput.value;
 
+    //clear main area
+    while (s_main.firstChild) {
+
+        s_main.firstChild.remove();
+
+    }
+
+
     //:api req: call a city to get long, lat details
     //if successful >> pull data and parse to next function
     //if error >> throw error, correct city?
@@ -141,6 +149,30 @@ function renderForecastWeather(weatherData) {
         timeStampIterator += 8;
 
     }
-    console.log(weatherForecast);
 
 }
+
+function addToHistory(city) {
+
+    const searchHistory = localStorage.getItem("searchHistory");
+    let searchHistoryArray = [];
+
+    if (searchHistory === null) {
+
+        console.log("hey");
+        searchHistoryArray.push(city);
+        localStorage.setItem("searchHistory", JSON.stringify(searchHistoryArray));
+
+    } else {
+
+        searchHistoryArray = JSON.parse(searchHistory);
+        searchHistoryArray.push(city);
+        localStorage.setItem("searchHistory", JSON.stringify(searchHistoryArray));
+
+    }
+
+    console.log(searchHistory);
+
+}
+
+addToHistory("Melbourne");
