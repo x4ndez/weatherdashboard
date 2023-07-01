@@ -2,7 +2,7 @@
 
     --light: #ffffff;
     --nav-bg: #0099ff;
-
+    --dark-nav-bg: #0087e0;
 }
 
 body {
@@ -29,12 +29,36 @@ nav {
 
     display: inline;
     float: left;
+    color: white;
 
     width: 20%;
     height: 90%;
 
     box-sizing: border-box;
     padding: 1rem;
+
+    background-color: var(--nav-bg);
+
+}
+
+nav li {
+
+    cursor: pointer;
+
+    background-color: var(--dark-nav-bg);
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    list-style-type: none;
+
+    width: 50%;
+
+    transition: background-color 1s;
+
+}
+
+nav li:hover {
 
     background-color: var(--nav-bg);
 
