@@ -113,6 +113,7 @@ function renderForecastWeather(weatherData) {
     let timeStampIterator = 2;
 
     weatherForecastContainer = document.createElement("div");
+    weatherForecastContainer.setAttribute("id", "forecast-container");
     s_main.append(weatherForecastContainer);
 
     for (let i = 0; i < 5; i++) {
@@ -123,6 +124,7 @@ function renderForecastWeather(weatherData) {
         const humidity = weatherData.list[timeStampIterator].main.humidity;
 
         weatherForecast[i] = document.createElement("div");
+        weatherForecast[i].setAttribute("class", "forecast-item");
 
         weatherForecast[i].innerHTML = `
 
