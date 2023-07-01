@@ -27,7 +27,7 @@ s_citySearchSubmit.addEventListener("click", function () {
 
 });
 
-function getCity() {
+function getCity(citySearched) {
 
     let getCityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${citySearched}&appid=${weatherAPIKey}`;
 
@@ -45,3 +45,8 @@ function getCity() {
 
 }
 
+function getWeatherData() {
+
+
+
+}
