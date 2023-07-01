@@ -105,12 +105,14 @@ function renderCurrentWeather(weatherData) {
     const temp = weatherData.main.temp;
     const wind = weatherData.wind.speed;
     const humidity = weatherData.main.humidity;
+    const iconCode = weatherData.weather[0].icon;
 
     const currentWeatherEl = document.createElement("div");
     currentWeatherEl.innerHTML = `
 
         <h2>${city} (${date})</h2>
 
+        <p><img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" /></p>
         <p>Temp: ${temp} F</p>
         <p>Wind: ${wind} MPH</p>
         <p>Humidity: ${humidity} %</p>
@@ -141,6 +143,7 @@ function renderForecastWeather(weatherData) {
         const temp = weatherData.list[timeStampIterator].main.temp;
         const wind = weatherData.list[timeStampIterator].wind.speed;
         const humidity = weatherData.list[timeStampIterator].main.humidity;
+        const iconCode = weatherData.list[timeStampIterator].weather[0].icon;
 
         weatherForecast[i] = document.createElement("div");
         weatherForecast[i].setAttribute("class", "forecast-item");
@@ -149,6 +152,7 @@ function renderForecastWeather(weatherData) {
 
         <h3>${date}</h3>
 
+        <p><img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" /></p>
         <p>Temp: ${temp} F</p>
         <p>Wind: ${wind} MPH</p>
         <p>Humidity: ${humidity} %</p>
