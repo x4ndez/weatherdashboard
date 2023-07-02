@@ -57,8 +57,8 @@ async function getCityData(type, citySearched) {
 
             } else {
 
-                alert("Failed Request: " + response.status);
-                console.log("Failed Request: " + response.status);
+                alert("Failed Request: " + response.status + ", please try again.");
+                console.log("Failed Request: " + response.status + ", please try again.");
 
             }
 
@@ -103,7 +103,7 @@ async function getWeatherData(type, cityLat, cityLon) {
 
 function renderCurrentWeather(weatherData) {
 
-    // add: city, date, temp, wind, humidity
+    // add: city, date, temp, wind, humidity, icon
 
     const city = weatherData.name;
     const date = dayjs().format("dddd, DD/MM/YYYY");
@@ -143,12 +143,12 @@ function renderForecastWeather(weatherData) {
     s_main.append(weatherForecastContainer);
 
     //get the indexes of weather data and put them in the array timeStampIterator...
-    //if they are the day after current date AND the hour is 12:00
+    //if they are the day after current date AND the hour is 00:00.
     for (let i = 0; i < weatherData.list.length; i++) {
 
         if (
             dayjs().date() < dayjs(weatherData.list[i].dt_txt).date() &&
-            dayjs(weatherData.list[i].dt_txt).isSame(dayjs(weatherData.list[i].dt_txt).hour(12))
+            dayjs(weatherData.list[i].dt_txt).isSame(dayjs(weatherData.list[i].dt_txt).hour(0))
         ) {
 
             timeStampIterator.push(i);
@@ -270,7 +270,5 @@ function getSearchHistory() {
         }
 
     }
-
-
 
 }
