@@ -15,15 +15,15 @@
 
 This is the week 6 challenge for the edX/Monash Bootcamp.  We were required to make a weather dashboard with the following acceptance criteria:
 
-``md
-GIVEN a weather dashboard with form inputs
-WHEN I search for a city
-THEN I am presented with current and future conditions for that city and that city is added to the search history
-WHEN I view current weather conditions for that city
-THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the the wind speed
-WHEN I view future weather conditions for that city
-THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
-WHEN I click on a city in the search history
+``
+GIVEN a weather dashboard with form inputs<br>
+WHEN I search for a city<br>
+THEN I am presented with current and future conditions for that city and that city is added to the search history<br>
+WHEN I view current weather conditions for that city<br>
+THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the the wind speed<br>
+WHEN I view future weather conditions for that city<br>
+THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity<br>
+WHEN I click on a city in the search history<br>
 THEN I am again presented with current and future conditions for that city
 ``
 
