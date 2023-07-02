@@ -31,15 +31,15 @@ function renderWeather(userInput) {
     //if successful >> pull data and parse to next function
     //if error >> throw error, correct city?
 
-    getCityData("weather", citySearched);
-
     //:api req: get city weather data
     //if successful >> pull weather data and parse to next function
     //>> Add city to nav list and store in local storage
     //>> display city weather details on main
     //if error >> throw error with error code
 
-    getCityData("forecast", citySearched);
+    getCityData("weather", citySearched); //:api req: for current weather
+
+    getCityData("forecast", citySearched); //:api req: for 5 day forecast
 
 }
 
