@@ -45,7 +45,7 @@ function renderWeather(userInput) {
 
 async function getCityData(type, citySearched) {
 
-    let getCityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${citySearched}&appid=${weatherAPIKey}`;
+    let getCityUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${citySearched}&appid=${weatherAPIKey}`;
 
     const cityData = await fetch(getCityUrl)
         .then(function (response) {
